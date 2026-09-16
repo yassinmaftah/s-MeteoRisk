@@ -10,7 +10,7 @@ def json_to_dataframe(data_file) :
     for r in data_row:
         # print(r.get("city"))
         city = r.get("city")
-        daily_data = r.get("weather",{}).get("daily",{}) #.get("time")
+        daily_data = r.get("daily",{})
 
         time = daily_data.get("time",[])
 
@@ -21,9 +21,6 @@ def json_to_dataframe(data_file) :
             row = {
                 'city' : city,
                 'date' : time[i],
-                # "temperature_2m_max","temperature_2m_min","precipitation_sum",
-                # "precipitation_probability_max","windspeed_10m_max",
-                # "windgusts_10m_max","weathercode"
                 'temperature_2m_max' : daily_data.get('temperature_2m_max',[None]*num_days)[i],
                 'temperature_2m_min' : daily_data.get('temperature_2m_min',[None]*num_days)[i],
                 'precipitation_probability_max' : daily_data.get('precipitation_probability_max',[None]*num_days)[i],
@@ -47,7 +44,7 @@ def json_to_dataframe(data_file) :
 
 
 
-df = json_to_dataframe('../bronze/raw_data.json')
+# df = json_to_dataframe('../bronze/raw_data.json')
 
-print(df.head(15))
+# print(df.head(15))
 
