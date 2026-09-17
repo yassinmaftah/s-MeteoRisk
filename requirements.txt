@@ -1,2 +1,4 @@
 pandas
 requests
+SQLAlchemy
+psycopg2-binary
