@@ -28,6 +28,10 @@ class WeatherRisk(Base):
     precip_max = Column(Float)
     wind_gusts = Column(Float)
     risk_total = Column(Float)
+
+    temp_category = Column(String(50))
+    precip_category = Column(String(50))
+    wind_category = Column(String(50))
     city = relationship("City", back_populates="weather_logs")
 
 
