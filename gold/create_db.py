@@ -3,7 +3,7 @@ from sqlalchemy.orm import declarative_base, relationship
 
 DB_USER = "postgres"
 DB_PASS = "ysn.mfth"
-DB_HOST = "localhost"
+DB_HOST = "meteorisk_db"
 DB_NAME = "s_meteorisk_db"
 
 engine = create_engine(f"postgresql+pg8000://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}")

@@ -2,3 +2,4 @@ pandas
 requests
 SQLAlchemy
 psycopg2-binary
+pg8000
