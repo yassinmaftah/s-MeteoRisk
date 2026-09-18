@@ -7,6 +7,7 @@ services:
       - .:/app
     depends_on:
       - db
+      
   db:
     image: postgres:16
     container_name: meteorisk_db
@@ -17,6 +18,47 @@ services:
     ports:
       - "5432:5432"
     volumes:
-    - pg_data:/var/lib/postgresql/data  
+      - pg_data:/var/lib/postgresql/data  
+
+  airflow-init:
+    image: apache/airflow:2.7.1
+    depends_on:
+      - db
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - _AIRFLOW_DB_UPGRADE=true
+      - _AIRFLOW_WWW_USER_CREATE=true
+      - _AIRFLOW_WWW_USER_USERNAME=airflow
+      - _AIRFLOW_WWW_USER_PASSWORD=airflow
+    command: version
+    volumes:
+      - ./:/opt/airflow/
+
+  airflow-scheduler:
+    image: apache/airflow:2.7.1
+    command: scheduler
+    depends_on:
+      - db
+    volumes:
+      - ./:/opt/airflow/
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+
+  airflow-webserver:
+    image: apache/airflow:2.7.1
+    command: webserver
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./:/opt/airflow/
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - _PIP_ADDITIONAL_REQUIREMENTS=pg8000 pandas numpy requests
+
 volumes:
   pg_data:

@@ -33,7 +33,7 @@ def json_to_dataframe(data_file) :
             rows.append(row)
 
     df = pd.DataFrame(rows)
-    df.to_csv('../silver/df_silver.csv', index=False)
+    df.to_csv('silver/df_silver.csv', index=False)
 
     return df
 

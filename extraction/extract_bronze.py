@@ -60,8 +60,10 @@ def save_to_bronze(data,file_path) :
 
     print("Done")
 
-cities = load_cites('bronze/ma.csv')
 
-new_data = fetch_data_with_API(cities)
+def x():
+    cities = load_cites('bronze/ma.csv')
 
-save_to_bronze(new_data,'bronze/data01.json')
+    new_data = fetch_data_with_API(cities)
+
+    save_to_bronze(new_data,'bronze/data01.json')

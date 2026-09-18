@@ -1,7 +1,8 @@
 import pandas as pd
 from sqlalchemy.orm import sessionmaker
 
-from create_db import engine, City, WeatherRisk
+from gold.create_db import engine, City, WeatherRisk
+
 def get_temp_cat(temp):
     if temp < 15: 
         return 'Froid'
@@ -94,6 +95,6 @@ def insert_silver_data():
 
 
 
-if __name__ == "__main__":
+def x3():
     insert_silver_data()
 
