@@ -9,10 +9,7 @@ from transformation.clean_silver import x2
 from gold.insert_data import x3
 default_args = {
     'owner': 'yassine',
-    'depends_on_past': False,
     'start_date': datetime(2026, 9, 18), 
-    'email_on_failure': False,
-    'email_on_retry': False,
     'retries': 3,
     'retry_delay': timedelta(minutes=5),
 }
@@ -20,8 +17,8 @@ default_args = {
 with DAG(
     's_meteorisk_daily_update',
     default_args=default_args,
-    description='Pipeline ETL complet pour s-MeteoRisk',
-    schedule_interval='0 2 * * *',
+    description='Complete ETL pipeline for s-MeteoRisk',
+    schedule_interval='@daily',
     catchup=False,
     tags=['MeteoRisk', 'ETL'],
 ) as dag:
