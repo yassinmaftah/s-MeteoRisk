@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "MeteoRisk DB",
+            "database": "s_meteorisk_db",
+            "username": "postgres",
+            "password": "ysn.mfth"
+        }
+    ]
+}
