@@ -8,29 +8,22 @@ from transformation.json_to_df import json_to_dataframe
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 def clean_data(df):
-    df.fillna(0, inplace=True)
-    
-    df['date'] = pd.to_datetime(df['date'])
+    df = df.copy()
 
-    expected_dates = df['date'].shift(1).apply(fix_mission_day)
-    df['date'] = df['date'].fillna(expected_dates)
-
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
     weather_cols = [
-        'temperature_2m_max', 'temperature_2m_min', 
-        'precipitation_probability_max', 'wind_speed_10m_max', 
-        'wind_gusts_10m_max', 'weather_code'
+        "temperature_2m_max", "temperature_2m_min",
+        "precipitation_probability_max", "wind_speed_10m_max",
+        "wind_gusts_10m_max", "weather_code",
     ]
     df[weather_cols] = df[weather_cols].ffill()
+    df = df.dropna(subset=["date"]).drop_duplicates()
 
-    df.drop_duplicates(inplace=True)
-    cities_df = pd.read_csv(PROJECT_ROOT / 'bronze' / 'ma.csv')
-    df = pd.merge(df, cities_df[['city', 'lat', 'lng']], on='city', how='left')
+    cities_df = pd.read_csv(PROJECT_ROOT / "bronze" / "ma.csv")
+    df = pd.merge(df, cities_df[["city", "lat", "lng"]], on="city", how="left")
     df = calculate_risk_features(df)
-    df.to_csv(PROJECT_ROOT / 'silver' / 'df_silver.csv', index=False)
+    df.to_csv(PROJECT_ROOT / "silver" / "df_silver.csv", index=False)
     return df
-
-def fix_mission_day(date):
-    return date + pd.Timedelta(days=1)
 
 def calculate_risk_features(df):
     wind_conditions = [
