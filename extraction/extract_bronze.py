@@ -2,7 +2,9 @@ import pandas as pd
 import requests
 import time
 import json
-import os
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_cites(file_path) :
@@ -51,9 +53,8 @@ def fetch_data_with_API(cities) :
 # C:\Users\yassi\OneDrive\Desktop\s-MeteoRisk\bronze\ma.csv
 
 def save_to_bronze(data,file_path) :
-    folder_path = os.path.dirname(file_path)
-    if folder_path:
-        os.makedirs(folder_path, exist_ok=True)
+    file_path = Path(file_path)
+    file_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
@@ -62,8 +63,8 @@ def save_to_bronze(data,file_path) :
 
 
 def x():
-    cities = load_cites('bronze/ma.csv')
+    cities = load_cites(PROJECT_ROOT / 'bronze' / 'ma.csv')
 
     new_data = fetch_data_with_API(cities)
 
-    save_to_bronze(new_data,'bronze/data01.json')
+    save_to_bronze(new_data, PROJECT_ROOT / 'bronze' / 'data01.json')

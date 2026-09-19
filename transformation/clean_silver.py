@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
+from pathlib import Path
 # from transformation.clean_silver import json_to_dataframe
 # from json_to_df import json_to_dataframe
 from transformation.json_to_df import json_to_dataframe
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 def clean_data(df):
     df.fillna(0, inplace=True)
@@ -20,10 +23,10 @@ def clean_data(df):
     df[weather_cols] = df[weather_cols].ffill()
 
     df.drop_duplicates(inplace=True)
-    cities_df = pd.read_csv('bronze/ma.csv')
+    cities_df = pd.read_csv(PROJECT_ROOT / 'bronze' / 'ma.csv')
     df = pd.merge(df, cities_df[['city', 'lat', 'lng']], on='city', how='left')
     df = calculate_risk_features(df)
-    df.to_csv('silver/df_silver.csv', index=False)
+    df.to_csv(PROJECT_ROOT / 'silver' / 'df_silver.csv', index=False)
     return df
 
 def fix_mission_day(date):
@@ -53,7 +56,7 @@ def calculate_risk_features(df):
 # cleaned_df = clean_data(df)
 
 def x2():
-    df = json_to_dataframe('bronze/data01.json')
+    df = json_to_dataframe(PROJECT_ROOT / 'bronze' / 'data01.json')
     clean_data(df)
 
 

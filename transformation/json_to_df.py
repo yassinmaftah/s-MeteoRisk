@@ -1,5 +1,8 @@
 import json
 import pandas as pd
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 def json_to_dataframe(data_file) :
     with open(data_file,'r',encoding='utf-8') as f: 
@@ -33,7 +36,7 @@ def json_to_dataframe(data_file) :
             rows.append(row)
 
     df = pd.DataFrame(rows)
-    df.to_csv('silver/df_silver.csv', index=False)
+    df.to_csv(PROJECT_ROOT / 'silver' / 'df_silver.csv', index=False)
 
     return df
 

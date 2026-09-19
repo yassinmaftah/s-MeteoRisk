@@ -1,7 +1,10 @@
 import pandas as pd
+from pathlib import Path
 from sqlalchemy.orm import sessionmaker
 
 from gold.create_db import engine, City, WeatherRisk
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 def get_temp_cat(temp):
     if temp < 15: 
@@ -30,7 +33,7 @@ def insert_silver_data():
     session = Session()
 
     print("read data from silver")
-    df = pd.read_csv('silver/df_silver.csv',parse_dates=['date'])
+    df = pd.read_csv(PROJECT_ROOT / 'silver' / 'df_silver.csv',parse_dates=['date'])
 
     print("start add categories")
     df['temp_category'] = df['temperature_2m_max'].apply(get_temp_cat)
