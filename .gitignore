@@ -3,3 +3,4 @@ airflow.cfg
 webserver_config.py
 logs/
 __pycache__/
+.env

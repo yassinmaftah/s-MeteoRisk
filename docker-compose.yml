@@ -5,18 +5,22 @@ services:
     build: .
     volumes:
       - .:/app
+    env_file:
+      - .env
     depends_on:
       - db
       
   db:
     image: postgres:16
     container_name: meteorisk_db
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ysn.mfth
-      POSTGRES_DB: s_meteorisk_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data  
 
@@ -24,6 +28,8 @@ services:
     image: apache/airflow:2.7.1
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
@@ -40,6 +46,8 @@ services:
     command: scheduler
     depends_on:
       - db
+    env_file:
+      - .env
     volumes:
       - ./:/opt/airflow/
     environment:
@@ -53,6 +61,8 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    env_file:
+      - .env
     volumes:
       - ./:/opt/airflow/
     environment:

@@ -1,12 +1,22 @@
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 
-DB_USER = "postgres"
-DB_PASS = "ysn.mfth"
-DB_HOST = "meteorisk_db"
-DB_NAME = "s_meteorisk_db"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+load_dotenv(PROJECT_ROOT / '.env')
 
-engine = create_engine(f"postgresql+pg8000://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}")
+DB_USER = os.getenv('DB_USER', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', '')
+DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_PORT = os.getenv('DB_PORT', '5432')
+DB_NAME = os.getenv('DB_NAME', 's_meteorisk_db')
+
+DATABASE_URL = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+engine = create_engine(DATABASE_URL)
 
 Base = declarative_base()
 
