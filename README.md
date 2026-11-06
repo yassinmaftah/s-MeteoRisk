@@ -351,5 +351,5 @@ For full statistical tables and distributions, see [`docs/results/pipeline-metri
 
 - **Author**: [Yassine Maftah](https://github.com/yassinmaftah)
 - **GitHub**: [@yassinmaftah](https://github.com/yassinmaftah)
-- **LinkedIn**: [Yassine Maftah](https://www.linkedin.com/in/yassine-maftah/)
+- **LinkedIn**: [Yassine Maftah](https://www.linkedin.com/in/yassine-maftah-b5793933b/)
 - **Portfolio / Project Link**: [s-MeteoRisk](https://github.com/yassinmaftah/s-MeteoRisk)
